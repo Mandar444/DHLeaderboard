@@ -54,14 +54,16 @@ const App = () => {
   const stats = useMemo(() => {
     if (!data.length) return { total: 0, avg: 0, topToday: null };
     
-    // Using Day 3 as "Today" for calculation
     const totalParticipants = data.length;
-    const day3Scores = data.map(p => p.scores.day3);
-    const avgScore = day3Scores.reduce((a, b) => a + b, 0) / totalParticipants;
+    // Calculate average based on Total scores
+    const avgScore = data.reduce((a, b) => a + b.total, 0) / totalParticipants;
     
-    // Find highest scorer specifically for "Today" (Day 3)
-    const sortedToday = [...data].sort((a,b) => b.scores.day3 - a.scores.day3);
-    const topToday = { ...sortedToday[0], todayScore: sortedToday[0].scores.day3 };
+    // Find highest overall scorer for the "Alpha" card
+    const sortedByTotal = [...data].sort((a,b) => b.total - a.total);
+    const topToday = { 
+      ...sortedByTotal[0], 
+      todayScore: sortedByTotal[0].total // Show the total score as the main metric
+    };
 
     return { total: totalParticipants, avg: avgScore, topToday };
   }, [data]);
