@@ -34,7 +34,23 @@ const HeaderStats = ({ totalParticipants, avgScore, lastUpdate }) => {
       </motion.div>
       
       <style>{`
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .stats-grid { 
+          display: grid; 
+          grid-template-columns: repeat(3, 1fr); 
+          gap: 1.5rem; 
+          margin-bottom: 2.5rem; 
+        }
+        @media (max-width: 768px) {
+          .stats-grid { 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 1rem;
+          }
+        }
+        @media (max-width: 480px) {
+          .stats-grid { 
+            grid-template-columns: 1fr; 
+          }
+        }
         .stat-card { padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; background: white; border: 1px solid rgba(99, 102, 241, 0.05); }
         .s-icon-bg { width: 52px; height: 52px; border-radius: 1.1rem; display: flex; align-items: center; justify-content: center; }
         .bg-indigo { background: rgba(99, 102, 241, 0.08); }

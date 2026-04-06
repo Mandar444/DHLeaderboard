@@ -138,19 +138,28 @@ const Podium = ({ winners }) => {
 
         .vessel-shadow { position: absolute; bottom: -30px; height: 15px; width: 50%; border-radius: 50%; background: #6366f1; filter: blur(25px); opacity: 0.06; }
 
-        @media (max-width: 900px) {
-          .podium-root { padding: 4rem 0 2rem; }
-          .podium-grid { gap: 0.75rem; margin: 0; padding: 0 0.5rem; }
-          .rank-1 { height: 360px; padding: 2.5rem 1rem 1.5rem; }
-          .rank-2 { height: 280px; padding: 2rem 0.75rem 1rem; }
-          .rank-3 { height: 240px; padding: 2rem 0.5rem 1rem; }
-          .performer-id { font-size: 1.1rem; }
-          .rank-1 .performer-id { font-size: 1.25rem; }
-          .pts-count { font-size: 1.5rem; }
-          .rank-1 .pts-count { font-size: 1.75rem; }
-          .avatar-orbit { width: 80px; height: 80px; margin-bottom: 1.5rem; }
-          .rank-1 .avatar-orbit { width: 100px; height: 100px; }
-          .rank-plate { font-size: 0.6rem; top: 1.25rem; padding: 0.3rem 0.6rem; }
+        @media (max-width: 768px) {
+          .podium-grid { 
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+          }
+          .podium-card { 
+            width: 100%;
+            height: auto !important;
+            padding: 3rem 1.5rem 1.5rem;
+            margin-bottom: 0 !important;
+          }
+          .rank-1 { order: 1; }
+          .rank-2 { order: 2; }
+          .rank-3 { order: 3; }
+          
+          .vessel-crown { top: -40px; }
+          .avatar-orbit { width: 100px !important; height: 100px !important; margin-bottom: 1.5rem; border-width: 6px !important; }
+          .performer-id { font-size: 1.5rem !important; }
+          .pts-count { font-size: 2rem !important; }
+          .rank-plate { top: 1rem; left: 1rem; }
         }
       `}</style>
     </div>
