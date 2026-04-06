@@ -8,9 +8,9 @@ const Podium = ({ winners }) => {
   const [silver, gold, bronze] = [winners[1], winners[0], winners[2]];
 
   const items = [
-    { ...silver, rank: 2, icon: <Medal size={40} />, color: 'var(--text-muted)', aura: 'rgba(255, 255, 255, 0.05)' },
-    { ...gold, rank: 1, icon: <Trophy size={60} />, color: 'var(--devhub-green)', aura: 'var(--accent-glow)' },
-    { ...bronze, rank: 3, icon: <Award size={32} />, color: 'var(--text-muted)', aura: 'rgba(255, 255, 255, 0.02)' }
+    { ...silver, rank: 2, icon: <Medal size={40} />, color: 'var(--text-muted)' },
+    { ...gold, rank: 1, icon: <Trophy size={60} />, color: 'var(--devhub-green)' },
+    { ...bronze, rank: 3, icon: <Award size={32} />, color: 'var(--text-muted)' }
   ];
 
   return (
@@ -19,45 +19,40 @@ const Podium = ({ winners }) => {
         {items.map((item, index) => (
           <motion.div
             key={item.id}
-            initial={{ opacity: 0, y: 150 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2, type: 'spring', damping: 15 }}
+            transition={{ delay: index * 0.1, duration: 0.8 }}
             className={`podium-card rank-${item.rank} premium-hover`}
-            style={{ '--rank-aura': item.aura, '--rank-color': item.color }}
           >
-            {/* Prismatic Badge */}
+            {/* Minimal Rank Plate */}
             <div className={`rank-plate rank-bg-${item.rank} font-black`}>
-              <span>RANK 0{item.rank}</span>
+              <span>0{item.rank}</span>
             </div>
 
-            {/* Cinematic Winner Aura */}
+            {/* Rank 1 Crown Accent (Subtle) */}
             {item.rank === 1 && (
-              <div className="vessel-crown">
-                <Crown className="crown-shimmer animate-float" />
-                <div className="aura-ring glow-animate"></div>
+              <div className="crown-anchor">
+                <Crown size={32} color="var(--devhub-green)" className="crown-icon animate-float" />
               </div>
             )}
 
-            {/* Avatar & Icon Core */}
-            <div className={`avatar-orbit rank-border-${item.rank} ${item.rank === 1 ? 'animate-float' : ''}`}>
-              <div className="avatar-glass">
-                {item.icon}
-              </div>
+            {/* Avatar Orbit */}
+            <div className={`avatar-orbit ${item.rank === 1 ? 'rank-1-orbit' : ''}`}>
+               <div className="avatar-content" style={{ color: item.color }}>
+                  {item.icon}
+               </div>
             </div>
 
-            {/* Performance Stats */}
-            <div className="performer-data">
-              <h3 className="performer-id font-outfit">{item.name}</h3>
-              <div className="performer-badge">ELITE OPERATIVE</div>
+            {/* Performer Info */}
+            <div className="p-data">
+              <h3 className="p-name font-outfit">{item.name}</h3>
+              <div className="p-badge uppercase">Elite Participant</div>
               
-              <div className="pts-vial-glass">
-                <span className="pts-count font-outfit">{item.total}</span>
-                <span className="pts-unit font-black">MARK</span>
+              <div className="p-score-box">
+                <span className="p-val font-outfit">{item.total}</span>
+                <span className="p-unit uppercase">Points</span>
               </div>
             </div>
-
-            {/* Bottom Glow */}
-            <div className="vessel-shadow"></div>
           </motion.div>
         ))}
       </div>
@@ -68,98 +63,76 @@ const Podium = ({ winners }) => {
         
         .podium-card {
           position: relative;
-          padding: 4.5rem 2rem 3rem;
+          padding: 4rem 2rem 2.5rem;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
-          border-radius: 3rem;
           background: var(--bg-card);
-          box-shadow: 0 25px 60px -15px var(--rank-aura);
-          border: 2px solid var(--border-color);
+          border: 1px solid var(--border-color);
+          border-radius: 2.5rem;
         }
-        .rank-1 { height: 520px; order: 2; border-color: var(--devhub-green); margin-bottom: 2rem; background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16, 255, 156, 0.05) 100%); }
-        .rank-2 { height: 420px; order: 1; opacity: 0.8; }
-        .rank-3 { height: 350px; order: 3; opacity: 0.7; }
+        .rank-1 { height: 500px; order: 2; border-color: var(--devhub-green); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16, 255, 156, 0.02) 100%); }
+        .rank-2 { height: 400px; order: 1; opacity: 0.9; }
+        .rank-3 { height: 340px; order: 3; opacity: 0.8; }
 
         .rank-plate {
           position: absolute;
-          top: 1.75rem;
-          padding: 0.5rem 1rem;
-          border-radius: 12px;
-          font-size: 0.75rem;
-          letter-spacing: 0.15em;
-          color: #000;
+          top: 1.5rem;
+          left: 1.5rem;
+          padding: 0.4rem 0.8rem;
+          border-radius: 8px;
+          font-size: 0.7rem;
           font-weight: 900;
-          box-shadow: 0 8px 20px -5px rgba(0,0,0,0.1);
-          z-index: 5;
+          color: #000;
         }
         .rank-bg-1 { background: var(--devhub-green); }
-        .rank-bg-2 { background: var(--text-muted); color: white; }
-        .rank-bg-3 { background: var(--text-muted); color: white; }
+        .rank-bg-2 { background: var(--text-muted); color: #fff; }
+        .rank-bg-3 { background: var(--text-muted); color: #fff; }
 
-        .vessel-crown { position: absolute; top: -75px; display: flex; justify-content: center; width: 100%; }
-        .crown-shimmer { color: var(--devhub-green); filter: drop-shadow(0 0 20px var(--devhub-green)); width: 50px; height: 50px; }
-        .aura-ring { position: absolute; width: 220px; height: 220px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: -40px; pointer-events: none; }
+        .crown-anchor { position: absolute; top: -50px; }
+        .crown-icon { opacity: 0.8; }
 
         .avatar-orbit {
-          width: 120px;
-          height: 120px;
+          width: 100px;
+          height: 100px;
           border-radius: 50%;
-          background: var(--bg-main);
-          border: 10px solid var(--border-color);
-          margin-bottom: 3rem;
-          box-shadow: 0 15px 35px var(--shadow-color);
+          background: rgba(255, 255, 255, 0.02);
+          border: 4px solid var(--border-color);
+          margin-bottom: 2.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          position: relative;
         }
-        .rank-1 .avatar-orbit { width: 170px; height: 170px; border-width: 15px; border-color: var(--devhub-green); }
-        .avatar-glass { color: var(--rank-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .rank-1-orbit { width: 150px; height: 150px; border-color: var(--devhub-green); }
+        .avatar-content { display: flex; align-items: center; justify-content: center; }
 
-        .performer-data { flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
-        .performer-id { font-size: 1.8rem; color: var(--text-main); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
-        .rank-1 .performer-id { font-size: 2.5rem; letter-spacing: -0.04em; color: white; }
-        
-        .performer-badge { font-size: 0.8rem; color: var(--text-muted); font-weight: 900; letter-spacing: 0.12em; margin-bottom: 1rem; opacity: 0.6; }
+        .p-data { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .p-name { font-size: 1.75rem; font-weight: 950; color: var(--text-main); line-height: 1.1; }
+        .rank-1 .p-name { font-size: 2.25rem; }
+        .p-badge { font-size: 0.7rem; font-weight: 900; color: var(--text-muted); opacity: 0.6; letter-spacing: 0.1em; }
 
-        .pts-vial-glass { 
-          padding: 1rem 2rem; 
-          background: rgba(0,0,0,0.1); 
-          border: 1px solid var(--border-color);
-          border-radius: 1.5rem;
+        .p-score-box { 
+          margin-top: 1.5rem;
+          padding: 0.75rem 1.75rem; 
+          background: rgba(0,0,0,0.15); 
+          border-radius: 1.25rem;
           display: flex;
           align-items: baseline;
-          gap: 0.6rem;
+          gap: 0.5rem;
         }
-        .pts-count { font-size: 2.25rem; font-weight: 950; color: var(--text-main); }
-        .rank-1 .pts-count { font-size: 3rem; color: var(--devhub-green); text-shadow: 0 0 15px var(--accent-glow); }
-        .pts-unit { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.15em; }
-
-        .vessel-shadow { position: absolute; bottom: -30px; height: 15px; width: 50%; border-radius: 50%; background: var(--devhub-green); filter: blur(25px); opacity: 0.1; }
+        .p-val { font-size: 2rem; font-weight: 900; color: var(--text-main); }
+        .rank-1 .p-val { color: var(--devhub-green); }
+        .p-unit { font-size: 0.65rem; color: var(--text-muted); font-weight: 800; }
 
         @media (max-width: 768px) {
-          .podium-grid { 
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            align-items: center;
-          }
-          .podium-card { 
-            width: 100%;
-            height: auto !important;
-            padding: 3rem 1.5rem 1.5rem;
-            margin-bottom: 0 !important;
-          }
+          .podium-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+          .podium-card { width: 100%; height: auto !important; padding: 2.5rem 1.5rem; }
           .rank-1 { order: 1; }
           .rank-2 { order: 2; }
           .rank-3 { order: 3; }
-          
-          .vessel-crown { top: -40px; }
-          .avatar-orbit { width: 100px !important; height: 100px !important; margin-bottom: 1.5rem; border-width: 6px !important; }
-          .performer-id { font-size: 1.5rem !important; }
-          .pts-count { font-size: 2rem !important; }
+          .avatar-orbit { width: 80px !important; height: 80px !important; margin-bottom: 1.5rem; }
+          .p-name { font-size: 1.5rem !important; }
           .rank-plate { top: 1rem; left: 1rem; }
         }
       `}</style>

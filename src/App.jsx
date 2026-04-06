@@ -117,7 +117,10 @@ const App = () => {
 
       <main>
         <TodayTopPerformer performer={stats.topToday} />
-        <HeaderStats totalParticipants={stats.total} avgScore={stats.avg} lastUpdate={format(lastUpdate, 'HH:mm:ss')} />
+        <HeaderStats 
+          totalParticipants={stats.total} 
+          avgScore={stats.avg} 
+        />
         <Podium winners={data.slice(0, 3)} />
         <LeaderboardTable participants={data} />
       </main>
@@ -136,6 +139,13 @@ const App = () => {
         .brand-badge { color: var(--devhub-green); font-size: 0.65rem; padding: 0.2rem 0.7rem; border-radius: 6px; margin-bottom: 0.25rem; font-weight: 950; }
         .brand-title { font-size: 3.5rem; font-weight: 950; line-height: 1; margin: 0.25rem 0; letter-spacing: -0.04em; }
         
+        [data-theme='light'] .text-grad-neon {
+          background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
         .h-actions { display: flex; align-items: center; gap: 1rem; }
         .dot { width: 10px; height: 10px; background: var(--devhub-green); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
 
