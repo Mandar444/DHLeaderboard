@@ -54,12 +54,12 @@ const LeaderboardTable = ({ participants }) => {
                   {/* Prismatic Progress Indicator */}
                   <div 
                     className="row-progress-bar" 
-                    style={{ width: `${(item.total / maxScore) * 100}%` }}
+                    style={{ width: `${(item.total / maxScore) * 100}%`, background: 'rgba(16, 255, 156, 0.05)' }}
                   ></div>
 
                   <div className="lb-col col-rank">
                     <div className={`rank-tag font-black ${index < 3 ? 'top-tier' : ''}`} 
-                         style={{ '--color': index < 3 ? (index === 0 ? '#fbbf24' : (index === 1 ? '#94a3b8' : '#b45309')) : '#6366f1' }}>
+                         style={{ '--color': index < 3 ? 'var(--devhub-green)' : 'var(--text-muted)' }}>
                       {index + 1}
                     </div>
                   </div>
@@ -142,49 +142,49 @@ const LeaderboardTable = ({ participants }) => {
       <style>{`
         .lb-section { margin-top: 5rem; }
         .lb-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; gap: 2rem; }
-        .brand-badge.mini { font-size: 0.65rem; padding: 0.2rem 0.5rem; margin-bottom: 0.5rem; width: fit-content; background: #6366f1; }
+        .brand-badge.mini { font-size: 0.65rem; padding: 0.2rem 0.5rem; margin-bottom: 0.5rem; width: fit-content; background: var(--devhub-green); color: #000; font-weight: 950; }
         
-        .search-box { padding: 0.85rem 1.5rem; display: flex; align-items: center; gap: 1rem; min-width: 360px; background: white; }
-        .search-box input { background: transparent; border: none; color: #1e293b; width: 100%; outline: none; font-weight: 700; font-family: 'Outfit'; font-size: 0.95rem; }
+        .search-box { padding: 0.85rem 1.5rem; display: flex; align-items: center; gap: 1rem; min-width: 360px; background: var(--bg-card); border: 1px solid var(--border-color); }
+        .search-box input { background: transparent; border: none; color: var(--text-main); width: 100%; outline: none; font-weight: 700; font-family: 'Outfit'; font-size: 0.95rem; }
 
-        .lb-viewport { padding: 0.75rem; border-radius: 2.5rem; background: white; border: 1px solid rgba(0,0,0,0.02); }
-        .lb-head { display: grid; grid-template-columns: 80px 1fr 120px 120px 50px; padding: 1.5rem 1rem; font-size: 0.7rem; font-weight: 950; color: #94a3b8; letter-spacing: 0.15em; text-transform: uppercase; }
+        .lb-viewport { padding: 0.75rem; border-radius: 2.5rem; background: var(--bg-card); border: 1px solid var(--border-color); }
+        .lb-head { display: grid; grid-template-columns: 80px 1fr 120px 120px 50px; padding: 1.5rem 1rem; font-size: 0.7rem; font-weight: 950; color: var(--text-muted); letter-spacing: 0.15em; text-transform: uppercase; }
 
-        .lb-row { position: relative; display: grid; grid-template-columns: 80px 1fr 120px 120px 50px; padding: 1.5rem 1rem; border-radius: 1.75rem; margin-bottom: 0.75rem; cursor: pointer; overflow: hidden; background: #f8faff; border: 1px solid transparent; }
-        .lb-row.active { background: white; border-color: rgba(99, 102, 241, 0.2); box-shadow: 0 15px 35px rgba(99, 102, 241, 0.1); }
+        .lb-row { position: relative; display: grid; grid-template-columns: 80px 1fr 120px 120px 50px; padding: 1.25rem 1rem; border-radius: 1.5rem; margin-bottom: 0.5rem; cursor: pointer; overflow: hidden; background: rgba(0,0,0,0.02); border: 1px solid transparent; transition: all 0.3s ease; }
+        [data-theme='dark'] .lb-row { background: rgba(255,255,255,0.02); }
+        .lb-row.active { background: var(--bg-card); border-color: var(--devhub-green); box-shadow: 0 10px 30px var(--shadow-color); }
 
-        .row-progress-bar { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(to right, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.04)); pointer-events: none; z-index: 0; }
+        .row-progress-bar { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(to right, var(--accent-glow), transparent); pointer-events: none; z-index: 0; }
         .lb-col { position: relative; z-index: 1; display: flex; align-items: center; }
 
-        .rank-tag { width: 40px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(0,0,0,0.03); font-size: 1.1rem; color: var(--color); border: 2px solid var(--color); }
-        .top-tier { border-width: 3px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .rank-tag { width: 40px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(0,0,0,0.05); font-size: 1.1rem; color: var(--color); border: 2px solid var(--color); transition: all 0.3s ease; }
+        .top-tier { border-width: 3px; box-shadow: 0 0 15px var(--accent-glow); }
 
         .op-flex { display: flex; align-items: center; gap: 1rem; }
-        .p-name { font-size: 1.35rem; font-weight: 800; color: #1e293b; }
-        .bonus-chip { color: #f59e0b; font-size: 0.8rem; padding: 0.3rem 0.7rem; background: white;  }
+        .p-name { font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
+        .bonus-chip { color: var(--devhub-green); font-size: 0.8rem; padding: 0.3rem 0.7rem; background: rgba(16, 255, 156, 0.1); border-radius: 8px; font-weight: 900; }
 
-        .streak-pulsar { display: flex; align-items: center; gap: 0.5rem; font-weight: 900; font-family: 'Outfit'; font-size: 1rem; color: #fb7185; }
-        .streak-pulsar.cold { color: #94a3b8; }
-        .anim-pulse { animation: pulse 2s infinite; }
+        .streak-pulsar { display: flex; align-items: center; gap: 0.5rem; font-weight: 900; font-family: 'Outfit'; font-size: 1rem; color: var(--devhub-green); }
+        .streak-pulsar.cold { color: var(--text-muted); opacity: 0.5; }
 
-        .pts-group .val { font-size: 1.75rem; color: #1e293b; }
+        .pts-group .val { font-size: 1.75rem; color: var(--text-main); }
 
         .lb-expanded-gate { padding: 0.5rem 1.25rem 2rem; }
         .expansion-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 1.5rem; }
-        .expansion-card { padding: 2.25rem; background: white; border-top-left-radius: 0; border-top-right-radius: 0; }
-        .expansion-card header { font-size: 0.7rem; color: #94a3b8; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; letter-spacing: 0.15em; }
+        .expansion-card { padding: 2.25rem; background: var(--bg-card); border-radius: 1.5rem; border: 1px solid var(--border-color); }
+        .expansion-card header { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; letter-spacing: 0.15em; }
 
         .mark-slots { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .slot-box { background: #f8faff; padding: 1.25rem; border-radius: 1.5rem; min-width: 100px; text-align: center; border: 1px solid rgba(0,0,0,0.02); }
-        .slot-box.engaged { background: rgba(6, 182, 212, 0.04); border-color: rgba(6, 182, 212, 0.1); }
-        .slot-box .label { display: block; font-size: 0.65rem; color: #94a3b8; margin-bottom: 0.5rem; }
-        .slot-box .score { font-size: 1.75rem; font-weight: 900; color: #1e293b; }
+        .slot-box { background: rgba(0,0,0,0.03); padding: 1.25rem; border-radius: 1.25rem; min-width: 100px; text-align: center; border: 1px solid var(--border-color); }
+        .slot-box.engaged { background: rgba(16, 255, 156, 0.05); border-color: var(--devhub-green); }
+        .slot-box .label { display: block; font-size: 0.65rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .slot-box .score { font-size: 1.75rem; font-weight: 900; color: var(--text-main); }
 
         .boost-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
-        .boost-item { display: flex; justify-content: space-between; font-size: 1rem; color: #64748b; font-weight: 600; }
-        .boost-item strong { color: #1e293b; font-weight: 900; font-family: 'Outfit'; }
+        .boost-item { display: flex; justify-content: space-between; font-size: 1rem; color: var(--text-muted); font-weight: 600; }
+        .boost-item strong { color: var(--text-main); font-weight: 900; font-family: 'Outfit'; }
 
-        .devhub-tag { margin-top: 2rem; font-size: 0.6rem; font-weight: 900; color: #6366f1; opacity: 0.5; text-align: right; letter-spacing: 0.1em; }
+        .devhub-tag { margin-top: 2rem; font-size: 0.6rem; font-weight: 900; color: var(--devhub-green); opacity: 0.5; text-align: right; letter-spacing: 0.1em; }
 
         @media (max-width: 900px) {
           .lb-head, .lb-row { grid-template-columns: 50px 1fr 70px; }

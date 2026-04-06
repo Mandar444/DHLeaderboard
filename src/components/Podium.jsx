@@ -8,9 +8,9 @@ const Podium = ({ winners }) => {
   const [silver, gold, bronze] = [winners[1], winners[0], winners[2]];
 
   const items = [
-    { ...silver, rank: 2, icon: <Medal size={40} />, color: 'var(--silver)', aura: 'rgba(148, 163, 184, 0.15)' },
-    { ...gold, rank: 1, icon: <Trophy size={60} />, color: 'var(--gold)', aura: 'rgba(245, 158, 11, 0.25)' },
-    { ...bronze, rank: 3, icon: <Award size={32} />, color: 'var(--bronze)', aura: 'rgba(180, 83, 9, 0.15)' }
+    { ...silver, rank: 2, icon: <Medal size={40} />, color: 'var(--text-muted)', aura: 'rgba(255, 255, 255, 0.05)' },
+    { ...gold, rank: 1, icon: <Trophy size={60} />, color: 'var(--devhub-green)', aura: 'var(--accent-glow)' },
+    { ...bronze, rank: 3, icon: <Award size={32} />, color: 'var(--text-muted)', aura: 'rgba(255, 255, 255, 0.02)' }
   ];
 
   return (
@@ -74,13 +74,13 @@ const Podium = ({ winners }) => {
           flex-direction: column;
           align-items: center;
           border-radius: 3rem;
-          background: white;
+          background: var(--bg-card);
           box-shadow: 0 25px 60px -15px var(--rank-aura);
-          border: 2px solid rgba(255,255,255,0.9);
+          border: 2px solid var(--border-color);
         }
-        .rank-1 { height: 520px; order: 2; border-color: rgba(245, 158, 11, 0.4); margin-bottom: 2rem; background: linear-gradient(135deg, white 0%, rgba(245, 158, 11, 0.08) 100%); }
-        .rank-2 { height: 420px; order: 1; filter: saturate(0.9); border-color: rgba(148, 163, 184, 0.2); }
-        .rank-3 { height: 350px; order: 3; filter: saturate(0.8); border-color: rgba(180, 83, 9, 0.2); }
+        .rank-1 { height: 520px; order: 2; border-color: var(--devhub-green); margin-bottom: 2rem; background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16, 255, 156, 0.05) 100%); }
+        .rank-2 { height: 420px; order: 1; opacity: 0.8; }
+        .rank-3 { height: 350px; order: 3; opacity: 0.7; }
 
         .rank-plate {
           position: absolute;
@@ -89,54 +89,55 @@ const Podium = ({ winners }) => {
           border-radius: 12px;
           font-size: 0.75rem;
           letter-spacing: 0.15em;
-          color: white;
+          color: #000;
+          font-weight: 900;
           box-shadow: 0 8px 20px -5px rgba(0,0,0,0.1);
           z-index: 5;
         }
-        .rank-bg-1 { background: var(--gold); }
-        .rank-bg-2 { background: var(--silver); }
-        .rank-bg-3 { background: var(--bronze); }
+        .rank-bg-1 { background: var(--devhub-green); }
+        .rank-bg-2 { background: var(--text-muted); color: white; }
+        .rank-bg-3 { background: var(--text-muted); color: white; }
 
         .vessel-crown { position: absolute; top: -75px; display: flex; justify-content: center; width: 100%; }
-        .crown-shimmer { color: var(--gold); filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6)); width: 50px; height: 50px; }
-        .aura-ring { position: absolute; width: 220px; height: 220px; background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%); top: -40px; pointer-events: none; }
+        .crown-shimmer { color: var(--devhub-green); filter: drop-shadow(0 0 20px var(--devhub-green)); width: 50px; height: 50px; }
+        .aura-ring { position: absolute; width: 220px; height: 220px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: -40px; pointer-events: none; }
 
         .avatar-orbit {
           width: 120px;
           height: 120px;
           border-radius: 50%;
-          background: white;
-          border: 10px solid rgba(255, 255, 255, 0.8);
+          background: var(--bg-main);
+          border: 10px solid var(--border-color);
           margin-bottom: 3rem;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+          box-shadow: 0 15px 35px var(--shadow-color);
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
         }
-        .rank-1 .avatar-orbit { width: 170px; height: 170px; border-width: 15px; }
+        .rank-1 .avatar-orbit { width: 170px; height: 170px; border-width: 15px; border-color: var(--devhub-green); }
         .avatar-glass { color: var(--rank-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
         .performer-data { flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
-        .performer-id { font-size: 1.8rem; color: #1e293b; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
-        .rank-1 .performer-id { font-size: 2.5rem; letter-spacing: -0.04em; }
+        .performer-id { font-size: 1.8rem; color: var(--text-main); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+        .rank-1 .performer-id { font-size: 2.5rem; letter-spacing: -0.04em; color: white; }
         
-        .performer-badge { font-size: 0.8rem; color: #64748b; font-weight: 900; letter-spacing: 0.12em; margin-bottom: 1rem; opacity: 0.6; }
+        .performer-badge { font-size: 0.8rem; color: var(--text-muted); font-weight: 900; letter-spacing: 0.12em; margin-bottom: 1rem; opacity: 0.6; }
 
         .pts-vial-glass { 
           padding: 1rem 2rem; 
-          background: #f8faff; 
-          border: 1px solid rgba(99, 102, 241, 0.08);
+          background: rgba(0,0,0,0.1); 
+          border: 1px solid var(--border-color);
           border-radius: 1.5rem;
           display: flex;
           align-items: baseline;
           gap: 0.6rem;
         }
-        .pts-count { font-size: 2.25rem; font-weight: 950; color: #1e293b; }
-        .rank-1 .pts-count { font-size: 3rem; color: var(--gold); }
-        .pts-unit { font-size: 0.75rem; color: #94a3b8; letter-spacing: 0.15em; }
+        .pts-count { font-size: 2.25rem; font-weight: 950; color: var(--text-main); }
+        .rank-1 .pts-count { font-size: 3rem; color: var(--devhub-green); text-shadow: 0 0 15px var(--accent-glow); }
+        .pts-unit { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.15em; }
 
-        .vessel-shadow { position: absolute; bottom: -30px; height: 15px; width: 50%; border-radius: 50%; background: #6366f1; filter: blur(25px); opacity: 0.06; }
+        .vessel-shadow { position: absolute; bottom: -30px; height: 15px; width: 50%; border-radius: 50%; background: var(--devhub-green); filter: blur(25px); opacity: 0.1; }
 
         @media (max-width: 768px) {
           .podium-grid { 

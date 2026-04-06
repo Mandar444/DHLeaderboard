@@ -1,30 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap');
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light;
-  color: #1e293b;
-  background-color: #f0f4ff; /* Faint Indigo Base */
-
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  /* DevHub Color Palette */
-  --devhub-primary: #6366f1;   /* Indigo */
-  --devhub-secondary: #06b6d4; /* Teal/Cyan */
-  --devhub-accent: #f97316;    /* Orange */
-  --devhub-bg: #f8fafc;
+  --devhub-green: #10ff9c; /* Official Neon Green */
+  --devhub-dark: #07070a;
+  --devhub-light: #f8fafc;
   
-  --gold: #f59e0b;
-  --silver: #64748b;
-  --bronze: #b45309;
+  --trans-smooth: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
 
-  --trans-smooth: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  --shadow-color: rgba(99, 102, 241, 0.1);
+/* Light Theme Variables */
+[data-theme='light'] {
+  --bg-main: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: rgba(0, 0, 0, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --accent-glow: rgba(16, 255, 156, 0.2);
+  .bg-neon { background: rgba(16, 255, 156, 0.08); }
+}
+
+/* Dark Theme Variables (DEFAULT) */
+[data-theme='dark'] {
+  --bg-main: #07070a;
+  --bg-card: rgba(17, 17, 24, 0.6);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --accent-glow: rgba(16, 255, 156, 0.4);
 }
 
 * {
@@ -35,14 +39,29 @@
 
 body {
   min-height: 100vh;
-  /* Rich Prismatic Background */
-  background: 
-    radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(20, 184, 166, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(249, 115, 22, 0.1) 0%, transparent 40%),
-    #f8faff;
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 10% 10%, var(--accent-glow) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(16, 255, 156, 0.05) 0%, transparent 40%);
   background-attachment: fixed;
-  color: #1e293b;
+  color: var(--text-main);
+  transition: background-color var(--trans-smooth), color var(--trans-smooth);
+  overflow-x: hidden;
+}
+
+/* Grid Pattern Overlay for Tech Look */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(16, 255, 156, 0.03) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  pointer-events: none;
+  z-index: -1;
 }
 
 #root {
@@ -52,78 +71,82 @@ body {
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  #root {
-    padding: 1.5rem 1rem;
-  }
-}
-
 h1, h2, h3, .font-outfit {
   font-family: 'Outfit', sans-serif;
   letter-spacing: -0.01em;
 }
 
-/* Prismatic Glass - Colorful Tints */
+/* Neo-Neon Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 15px 45px -15px var(--shadow-color);
+  background: var(--bg-card);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 40px -10px var(--shadow-color);
   border-radius: 2rem;
+  transition: var(--trans-smooth);
 }
 
 .glass-pill {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(99, 102, 241, 0.1);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 9999px;
-  padding: 0.4rem 1.25rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  padding: 0.5rem 1.25rem;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
 }
 
 .premium-hover:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 40px 80px -20px rgba(99, 102, 241, 0.15);
+  transform: translateY(-8px);
+  border-color: var(--devhub-green);
+  box-shadow: 0 20px 60px -15px var(--accent-glow);
 }
 
-@media (max-width: 768px) {
-  .premium-hover:hover {
-    transform: translateY(-2px) scale(1);
-  }
+/* Theme Toggle Button Styles */
+.theme-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--devhub-green);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.theme-toggle-btn:hover {
+  background: var(--devhub-green);
+  color: #000;
+  transform: rotate(15deg);
 }
 
-/* DevHub Special Badge */
-.brand-badge {
-  background: linear-gradient(135deg, var(--devhub-primary), var(--devhub-secondary));
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
-  font-weight: 800;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  display: inline-block;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+.text-neon {
+  color: var(--devhub-green);
+  text-shadow: 0 0 15px var(--accent-glow);
 }
 
-.text-grad-devhub {
-  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+.text-grad-neon {
+  background: linear-gradient(135deg, white 0%, var(--devhub-green) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.5; }
+[data-theme='light'] .text-grad-neon {
+  background: linear-gradient(135deg, #0f172a 0%, var(--devhub-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.animate-float { animation: float 6s ease-in-out infinite; }
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
 }
