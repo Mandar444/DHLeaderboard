@@ -107,9 +107,12 @@ const TodayTopPerformer = ({ performer }) => {
         .zap-glow { filter: drop-shadow(0 0 15px #fbbf24); }
 
         @media (max-width: 850px) {
-          .alpha-body { flex-direction: column; align-items: flex-start; gap: 2.5rem; }
-          .alpha-name { font-size: 2.5rem; }
+          .alpha-vessel { padding: 2rem 1.5rem; border-radius: 1.5rem; margin-bottom: 2rem; }
+          .alpha-body { flex-direction: column; align-items: center; text-align: center; gap: 2rem; }
+          .alpha-badge { left: 50%; transform: translateX(-50%); white-space: nowrap; }
+          .alpha-name { font-size: 2.25rem; }
           .pts-data .num { font-size: 3rem; }
+          .alpha-pts-vial { width: 100%; justify-content: center; }
         }
       `}</style>
     </motion.div>

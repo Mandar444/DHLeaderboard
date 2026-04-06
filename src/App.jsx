@@ -140,8 +140,12 @@ const App = () => {
         .footer-line { width: 120px; height: 3px; background: linear-gradient(to right, transparent, rgba(99,102,241,0.2), transparent); margin: 0 auto 2rem; }
 
         @media (max-width: 850px) {
-          .lb-header { flex-direction: column; align-items: flex-start; gap: 3rem; }
-          .brand-title { font-size: 2.25rem; }
+          .lb-header { flex-direction: column; align-items: center; text-align: center; gap: 2rem; margin-bottom: 3rem; }
+          .brand-group { flex-direction: column; align-items: center; gap: 1rem; }
+          .brand-title { font-size: 1.75rem; text-align: center; }
+          .sync-badge { justify-content: center; }
+          .active-pill { display: none; }
+          .brand-icon { width: 60px; height: 60px; border-radius: 1.25rem; }
         }
       `}</style>
     </div>

@@ -187,10 +187,13 @@ const LeaderboardTable = ({ participants }) => {
         .devhub-tag { margin-top: 2rem; font-size: 0.6rem; font-weight: 900; color: #6366f1; opacity: 0.5; text-align: right; letter-spacing: 0.1em; }
 
         @media (max-width: 900px) {
-          .lb-head, .lb-row { grid-template-columns: 60px 1fr 60px 50px; }
-          .col-streak { display: none; }
+          .lb-head, .lb-row { grid-template-columns: 50px 1fr 70px; }
+          .col-streak, .col-action { display: none; }
           .expansion-grid { grid-template-columns: 1fr; }
-          .p-name { font-size: 1.1rem; }
+          .p-name { font-size: 1.15rem; font-weight: 800; }
+          .pts-group .val { font-size: 1.5rem; }
+          .lb-row { padding: 1rem 0.5rem; margin-bottom: 0.5rem; }
+          .rank-tag { width: 32px; height: 28px; font-size: 1rem; }
         }
       `}</style>
     </div>

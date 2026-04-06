@@ -139,12 +139,18 @@ const Podium = ({ winners }) => {
         .vessel-shadow { position: absolute; bottom: -30px; height: 15px; width: 50%; border-radius: 50%; background: #6366f1; filter: blur(25px); opacity: 0.06; }
 
         @media (max-width: 900px) {
-          .podium-grid { gap: 1rem; margin: 0; }
-          .rank-1 { height: 420px; }
-          .rank-2 { height: 350px; }
-          .rank-3 { height: 300px; }
-          .performer-id { font-size: 1.25rem; }
-          .rank-1 .performer-id { font-size: 1.5rem; }
+          .podium-root { padding: 4rem 0 2rem; }
+          .podium-grid { gap: 0.75rem; margin: 0; padding: 0 0.5rem; }
+          .rank-1 { height: 360px; padding: 2.5rem 1rem 1.5rem; }
+          .rank-2 { height: 280px; padding: 2rem 0.75rem 1rem; }
+          .rank-3 { height: 240px; padding: 2rem 0.5rem 1rem; }
+          .performer-id { font-size: 1.1rem; }
+          .rank-1 .performer-id { font-size: 1.25rem; }
+          .pts-count { font-size: 1.5rem; }
+          .rank-1 .pts-count { font-size: 1.75rem; }
+          .avatar-orbit { width: 80px; height: 80px; margin-bottom: 1.5rem; }
+          .rank-1 .avatar-orbit { width: 100px; height: 100px; }
+          .rank-plate { font-size: 0.6rem; top: 1.25rem; padding: 0.3rem 0.6rem; }
         }
       `}</style>
     </div>
