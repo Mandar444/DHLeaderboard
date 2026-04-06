@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
-import { Trophy, Activity, LayoutGrid, Search, ListFilter } from 'lucide-react';
+import { Trophy, Activity, Sun, Moon, Zap, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+// Components
 import Podium from './components/Podium';
 import LeaderboardTable from './components/LeaderboardTable';
 import { HeaderStats, TodayTopPerformer } from './components/Highlights';
+
+// Data & Utils
 import { mockParticipants, processLeaderboardData } from './data/mockData';
 import { parseSheetCSV } from './utils/csvParser';
 
@@ -14,15 +19,21 @@ const App = () => {
   const [data, setData] = useState([]);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState('dark');
   const [error, setError] = useState(null);
+
+  // Sync Theme with DOM
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   // Real Data Fetch Logic
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (!SHEET_URL || SHEET_URL.includes("YOUR")) {
-          // Use Mock Data if no URL is provided
-          console.log("No URL: Using mock data");
           setData(processLeaderboardData(mockParticipants));
           setLoading(false);
           return;
@@ -38,8 +49,7 @@ const App = () => {
         setError(null);
       } catch (err) {
         console.error("Fetch error:", err);
-        setError("Unable to sync live sheet. Showing cached data.");
-        // Fallback to mock data on error so UI doesn't break
+        setError("Unable to sync live sheet.");
         if (data.length === 0) setData(processLeaderboardData(mockParticipants));
       } finally {
         setLoading(false);
@@ -47,7 +57,7 @@ const App = () => {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 30000); // Poll every 30s as per PRD
+    const interval = setInterval(fetchData, 30000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -55,14 +65,11 @@ const App = () => {
     if (!data.length) return { total: 0, avg: 0, topToday: null };
     
     const totalParticipants = data.length;
-    // Calculate average based on Total scores
     const avgScore = data.reduce((a, b) => a + b.total, 0) / totalParticipants;
-    
-    // Find highest overall scorer for the "Alpha" card
     const sortedByTotal = [...data].sort((a,b) => b.total - a.total);
     const topToday = { 
       ...sortedByTotal[0], 
-      todayScore: sortedByTotal[0].total // Show the total score as the main metric
+      todayScore: sortedByTotal[0].total 
     };
 
     return { total: totalParticipants, avg: avgScore, topToday };
@@ -70,8 +77,10 @@ const App = () => {
 
   if (loading) return (
     <div className="loading-screen">
-      <div className="loader"></div>
-      <p>Syncing Leaderboard...</p>
+      <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>
+        <Trophy size={48} color="var(--devhub-green)" />
+      </motion.div>
+      <p className="font-outfit uppercase tracking-widest font-black text-xs text-neon">Initializing DevHub Oracle...</p>
     </div>
   );
 
@@ -83,14 +92,15 @@ const App = () => {
             <Trophy size={32} color="var(--devhub-green)" fill="rgba(16, 255, 156, 0.1)" />
           </div>
           <div className="brand-meta">
-            <div className="brand-badge">DEVHUB PRESENTATION</div>
-            <h1 className="brand-title text-grad-devhub">Pro Coding Contest</h1>
+            <div className="brand-badge glass">DEVHUB PRESENTATION</div>
+            <h1 className="brand-title text-grad-neon">Pro Coding Contest</h1>
             <div className="sync-badge">
               <span className="dot animate-pulse"></span>
-              <span className="font-outfit uppercase font-black tracking-widest text-[0.65rem] text-[var(--devhub-green)]">Live Streaming Data · Season 1</span>
+              <span className="font-outfit uppercase font-black tracking-widest text-[0.65rem] text-neon">Live Streaming Data · Season 1</span>
             </div>
           </div>
         </div>
+        
         <div className="h-actions">
           <button onClick={toggleTheme} className="theme-toggle-btn glass">
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -100,59 +110,47 @@ const App = () => {
               <span className="count-dot"></span>
               <Activity size={14} color="var(--devhub-green)" />
             </div>
-            <span className="font-black text-[0.7rem] uppercase tracking-wider text-[var(--devhub-green)] opacity-70">Contest Live</span>
+            <span className="font-black text-[0.7rem] uppercase tracking-wider text-neon opacity-70">Contest Live</span>
           </div>
         </div>
       </header>
 
       <main>
-        {/* Prismatic Alpha Feature Card */}
         <TodayTopPerformer performer={stats.topToday} />
-
-        {/* Global Performance Metris */}
-        <HeaderStats 
-          totalParticipants={stats.total} 
-          avgScore={stats.avg} 
-          lastUpdate={format(lastUpdate, 'HH:mm:ss')} 
-        />
-
-        {/* Cinematic Podium */}
+        <HeaderStats totalParticipants={stats.total} avgScore={stats.avg} lastUpdate={format(lastUpdate, 'HH:mm:ss')} />
         <Podium winners={data.slice(0, 3)} />
-
-        {/* Standard Participation Table */}
         <LeaderboardTable participants={data} />
       </main>
 
       <footer className="footer-vibe">
         <div className="footer-line"></div>
-        <p>Engineered by <span className="font-black text-[var(--devhub-green)]">DEVHUB</span> · 2026 Merit Excellence</p>
+        <p>Engineered by <span className="font-black text-neon">DEVHUB</span> · 2026 Merit Excellence</p>
       </footer>
 
       <style>{`
+        .loading-screen { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; background: var(--bg-main); }
         .lb-root { padding-bottom: 6rem; }
         .lb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; margin-top: 1rem; }
         .brand-group { display: flex; align-items: center; gap: 2rem; }
-        .brand-icon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; border-radius: 1.75rem; background: white; box-shadow: 0 15px 35px rgba(99, 102, 241, 0.15); }
-        .brand-title { font-size: 3.25rem; font-weight: 900; line-height: 1; margin: 0.5rem 0; letter-spacing: -0.04em; }
-        .sync-badge { display: flex; align-items: center; gap: 0.75rem; }
-        .dot { width: 10px; height: 10px; background: var(--devhub-green); border-radius: 50%; box-shadow: 0 0 12px rgba(99, 102, 241, 0.6); }
+        .brand-icon { width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; border-radius: 1.75rem; border: 1px solid var(--border-color); background: var(--bg-card); }
+        .brand-badge { color: var(--devhub-green); font-size: 0.65rem; padding: 0.2rem 0.7rem; border-radius: 6px; margin-bottom: 0.25rem; font-weight: 950; }
+        .brand-title { font-size: 3.5rem; font-weight: 950; line-height: 1; margin: 0.25rem 0; letter-spacing: -0.04em; }
+        
         .h-actions { display: flex; align-items: center; gap: 1rem; }
-        .theme-toggle-btn { padding: 0.5rem; border-radius: 50%; cursor: pointer; border: none; background: rgba(255,255,255,0.1); }
+        .dot { width: 10px; height: 10px; background: var(--devhub-green); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
 
-        .active-pill { padding: 0.85rem 1.75rem !important; background: rgba(255,255,255,0.8) !important; border: 1px solid rgba(99, 102, 241, 0.1) !important; box-shadow: 0 10px 20px rgba(0,0,0,0.03) !important; }
-        .avatar-stack { position: relative; }
-        .count-dot { position: absolute; top: -4px; right: -4px; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; border: 1px solid white; }
+        .active-pill { padding: 0.85rem 1.75rem !important; border-color: var(--border-color) !important; box-shadow: 0 10px 30px var(--shadow-color) !important; }
+        .count-dot { position: absolute; top: -4px; right: -4px; width: 6px; height: 6px; background: var(--devhub-green); border-radius: 50%; border: 1px solid var(--bg-main); box-shadow: 0 0 5px var(--devhub-green); }
 
-        .footer-vibe { margin-top: 7rem; text-align: center; color: #94a3b8; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
-        .footer-line { width: 120px; height: 3px; background: linear-gradient(to right, transparent, var(--devhub-green), transparent); margin: 0 auto 2rem; }
+        .footer-vibe { margin-top: 7rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+        .footer-line { width: 120px; height: 3px; background: linear-gradient(to right, transparent, var(--devhub-green), transparent); margin: 0 auto 2rem; opacity: 0.3; }
 
         @media (max-width: 850px) {
           .lb-header { flex-direction: column; align-items: center; text-align: center; gap: 2rem; margin-bottom: 3rem; }
           .brand-group { flex-direction: column; align-items: center; gap: 1rem; }
-          .brand-title { font-size: 1.75rem; text-align: center; }
-          .sync-badge { justify-content: center; }
-          .active-pill { display: none; }
-          .brand-icon { width: 60px; height: 60px; border-radius: 1.25rem; }
+          .h-actions { order: -1; width: 100%; justify-content: space-between; margin-bottom: 2rem; }
+          .brand-title { font-size: 2rem; }
+          .brand-icon { width: 60px; height: 60px; }
         }
       `}</style>
     </div>
