@@ -1,114 +1,231 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo } from 'react';
 import { 
-  Bell, 
-  Clock, 
-  Search
+  Trophy, 
+  X, 
+  AlertCircle, 
+  Star, 
+  Crown,
+  ChevronDown,
+  ChevronUp,
+  Share2,
+  RefreshCw,
+  ExternalLink
 } from 'lucide-react';
 
-// Components
-import Podium from './components/Podium';
-import LeaderboardTable from './components/LeaderboardTable';
-import Sidebar from './components/Sidebar';
-
-// Data
-import { mockParticipants, processLeaderboardData } from './data/mockData';
-
 const App = () => {
-  const [data] = useState(processLeaderboardData(mockParticipants));
-  const [activeTab, setActiveTab] = useState('LIVE_CONTEST');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('daily');
+  const [selectedDay, setSelectedDay] = useState(1);
+  const [expandedId, setExpandedId] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const filteredData = data.filter(p => 
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Real data from spreadsheet
+  const rawData = [
+    { id: 1, name: 'Naman Khairwar', streak: 2, bonus: 5, day1: 15, day2: 14, day3: 0, tier: 'S' },
+    { id: 2, name: 'Kunal Shetty', streak: 2, bonus: 2, day1: 10, day2: 8, day3: 0, tier: 'A' },
+    { id: 3, name: 'Saheb Singh Sandhu', streak: 0, bonus: 3, day1: 13, day2: 0, day3: 0, tier: 'A' },
+    { id: 4, name: 'Eshan Mohammed', streak: 2, bonus: 0, day1: 10, day2: 10, day3: 0, tier: 'A' },
+    { id: 5, name: 'Aaryan Patwardhan', streak: 0, bonus: 0, day1: 7, day2: 0, day3: 0, tier: 'B' },
+    { id: 6, name: 'Deetya Shivatare', streak: 2, bonus: 0, day1: 9, day2: 9, day3: 0, tier: 'B' },
+    { id: 7, name: 'Lakshya Somani', streak: 2, bonus: 0, day1: 8, day2: 9, day3: 0, tier: 'B' },
+    { id: 8, name: 'Aaryan Raorane', streak: 2, bonus: 0, day1: 7, day2: 7, day3: 0, tier: 'C' },
+    { id: 9, name: 'rose', streak: 0, bonus: 0, day1: 7, day2: 0, day3: 0, tier: 'C' },
+    { id: 10, name: 'Devesh Sadashiv Hegde', streak: 2, bonus: 0, day1: 10, day2: 10, day3: 0, tier: 'C' },
+    { id: 11, name: 'Mansi Bansal', streak: 2, bonus: 0, day1: 7, day2: 9, day3: 0, tier: 'D' },
+    { id: 12, name: 'Riya Gupta', streak: 2, bonus: 0, day1: 8, day2: 8, day3: 0, tier: 'D' },
+    { id: 13, name: 'Ananya Raut', streak: 1, bonus: 0, day1: 0, day2: 9, day3: 0, tier: 'D' },
+    { id: 14, name: 'Rehan Shashi', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, tier: 'D' },
+    { id: 15, name: 'Prachi Matai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, tier: 'D' },
+    { id: 16, name: 'Shreya Ravindra Desai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, tier: 'D' },
+    { id: 17, name: 'Vedant', streak: 1, bonus: 0, day1: 0, day2: 6, day3: 0, tier: 'D' },
+    { id: 18, name: 'Guruprasad T. Shinde', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, tier: 'D' },
+  ];
+
+  const processedParticipants = useMemo(() => {
+    return rawData.map(p => ({
+      ...p,
+      total: p.day1 + p.day2 + p.day3
+    }));
+  }, []);
+
+  const getFilteredData = () => {
+    let list = [...processedParticipants];
+    if (activeTab === 'daily') {
+      list.sort((a, b) => {
+        const scoreA = selectedDay === 1 ? a.day1 : selectedDay === 2 ? a.day2 : a.day3;
+        const scoreB = selectedDay === 1 ? b.day1 : selectedDay === 2 ? b.day2 : b.day3;
+        return scoreB - scoreA;
+      });
+    } else {
+      list.sort((a, b) => b.total - a.total);
+    }
+    return list;
+  };
+
+  const participants = getFilteredData();
+
+  const toggleExpand = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
+  const currentScore = (player) => {
+    if (activeTab === 'daily') {
+      return selectedDay === 1 ? player.day1 : selectedDay === 2 ? player.day2 : player.day3;
+    }
+    return player.total;
+  };
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(false), 800);
+  };
 
   return (
-    <div className="app-container">
-      <div className="grid-overlay" />
-      
-      <Sidebar />
-
-      <main className="main-wrapper">
-        {/* Top Header */}
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px' }}>
-          <nav style={{ display: 'flex', gap: '32px' }}>
-            {['LIVE_CONTEST', 'ARCHIVE', 'TEAMS'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`header-tab ${activeTab === tab ? 'active' : ''}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </nav>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#0a0c12', border: '1px solid #1a1c24', borderRadius: '4px' }}>
-              <Clock size={14} color="#00f0ff" />
-              <span className="font-mono" style={{ fontSize: '13px', fontWeight: 'bold' }}>04:12:00</span>
-            </div>
-            <Bell size={20} color="#4a5568" style={{ cursor: 'pointer' }} />
-            <button className="btn-cyan">REGISTER</button>
-          </div>
-        </header>
-
-        {/* Action Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <button className="btn-outline-green" style={{ borderColor: '#1a1c24', color: '#fff' }}>VIEW_REPLAY</button>
-            <button className="btn-outline-green">CHALLENGE_GHOST</button>
-          </div>
-          <div className="font-mono" style={{ fontSize: '10px', color: '#2d3748', letterSpacing: '0.1em' }}>
-            CONTEST_ID: OCT_2024_08_12
-          </div>
+    <div className="game-wrapper">
+      <div className="leaderboard-card">
+        
+        {/* Header Badge */}
+        <div className="header-badge">
+          <h1>Leaderboard</h1>
         </div>
 
-        {/* Podium */}
-        <div style={{ marginBottom: '64px' }}>
-          <Podium winners={data.slice(0, 3)} />
+        {/* Corner Icons */}
+        <div className="corner-icon icon-left">
+          <AlertCircle size={24} />
+        </div>
+        <div className="corner-icon icon-right">
+          <X size={24} />
         </div>
 
-        {/* List Section */}
-        <section>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px' }}>
-              <h2 className="font-display" style={{ fontSize: '18px', letterSpacing: '0.2em' }}>GLOBAL_CONTINGENT</h2>
-              <span className="font-mono" style={{ fontSize: '10px', color: '#4a5568' }}>// RANKS 04-50</span>
-            </div>
-            
-            <div style={{ position: 'relative' }}>
-              <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#4a5568' }} size={14} />
-              <input 
-                type="text" 
-                placeholder="FILTER_PLAYERS..."
-                style={{ background: '#0a0c12', border: '1px solid #1a1c24', padding: '10px 16px 10px 40px', borderRadius: '2px', color: '#fff', fontSize: '10px', width: '260px' }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <LeaderboardTable participants={filteredData} />
-          
-          <button style={{ width: '100%', marginTop: '32px', padding: '16px', background: 'none', border: '1px solid #1a1c24', color: '#4a5568', fontFamily: 'Orbitron', fontSize: '10px', letterSpacing: '0.2em', cursor: 'pointer' }}>
-            LOAD_ADDITIONAL_DATA (44_REMAINING)
+        {/* Main Period Tabs */}
+        <div className="tabs-container">
+          <button 
+            className={`tab-btn ${activeTab === 'daily' ? 'active' : ''}`}
+            onClick={() => setActiveTab('daily')}
+          >
+            Daily
           </button>
-        </section>
+          <button 
+            className={`tab-btn ${activeTab === 'weekly' ? 'active' : ''}`}
+            onClick={() => setActiveTab('weekly')}
+          >
+            Weekly
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'monthly' ? 'active' : ''}`}
+            onClick={() => setActiveTab('monthly')}
+          >
+            Monthly
+          </button>
+        </div>
 
-        {/* Footer */}
-        <footer style={{ marginTop: '100px', paddingTop: '48px', borderTop: '1px solid #1a1c24', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', opacity: 0.5 }}>
-          <div style={{ display: 'flex', gap: '32px', fontSize: '9px', fontFamily: 'Orbitron', letterSpacing: '0.1em' }}>
-            <a href="#" style={{ color: '#4a5568', textDecoration: 'none' }}>SYSTEM_STATUS</a>
-            <a href="#" style={{ color: '#4a5568', textDecoration: 'none' }}>API_DOCS</a>
-            <a href="#" style={{ color: '#4a5568', textDecoration: 'none' }}>SECURITY</a>
+        {/* Sub-Filter for Daily View */}
+        {activeTab === 'daily' && (
+          <div className="sub-filter-container animate-fade-in">
+             <span className="sub-filter-label">Filter:</span>
+             <div className="day-dots">
+               {[1, 2, 3].map(day => (
+                 <button 
+                   key={day}
+                   className={`day-dot ${selectedDay === day ? 'active' : ''}`}
+                   onClick={() => setSelectedDay(day)}
+                 >
+                   D{day}
+                 </button>
+               ))}
+             </div>
           </div>
-          <p className="font-mono" style={{ fontSize: '9px', color: '#2d3748' }}>
-            © 2024 KINETIC_TERMINAL // ENCRYPTED CONNECTION
-          </p>
-        </footer>
-      </main>
+        )}
+
+        {/* Scrollable List Content */}
+        <div className="rank-list-scroll">
+          <div className="rank-list">
+            {participants.map((player, index) => (
+              <div key={player.id} className="row-group">
+                <div 
+                  className={`rank-row ${expandedId === player.id ? 'highlight' : ''}`}
+                  onClick={() => toggleExpand(player.id)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="rank-number">
+                    {(index + 1).toString().padStart(2, '0')}
+                  </div>
+                  
+                  <div 
+                    className="rank-avatar" 
+                    style={{ 
+                      backgroundColor: index === 0 ? 'var(--accent-neon)' : 'rgba(255,255,255,0.05)',
+                      color: index === 0 ? 'var(--bg-deep)' : 'white'
+                    }}
+                  >
+                    <div className={`tier-badge tier-${player.tier.toLowerCase()}`}>
+                      {player.tier}
+                    </div>
+                    {index === 0 ? <Crown size={22} className="crown-icon" /> : <Trophy size={18} className="crown-icon opacity-20" />}
+                  </div>
+                  
+                  <div className="rank-username">
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span className="player-name">{player.name}</span>
+                      <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600' }}>Streak: {player.streak}D</span>
+                    </div>
+                  </div>
+                  
+                  <div className="rank-score">
+                    {currentScore(player).toString().padStart(2, '0')}
+                  </div>
+                  
+                  <div className="rank-chevron">
+                    {expandedId === player.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </div>
+                </div>
+
+                {/* Day-wise Marks Breakdown */}
+                {expandedId === player.id && (
+                  <div className="breakdown-container animate-expand">
+                    <div className="breakdown-grid">
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">Day 1</span>
+                        <span className="breakdown-value">{player.day1}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">Day 2</span>
+                        <span className="breakdown-value">{player.day2}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">Day 3</span>
+                        <span className="breakdown-value">{player.day3}</span>
+                      </div>
+                      <div className="breakdown-item" style={{ gridColumn: 'span 3', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px', marginTop: '4px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                           <span className="breakdown-label">Total Aggregate</span>
+                           <span className="breakdown-value text-neon">{player.total}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Footer */}
+        <div className="card-footer">
+          <div className="footer-status">
+             <div className="status-indicator" />
+             <span className="status-text">Last Sync: 2m ago</span>
+          </div>
+          <div className="footer-actions">
+             <button className="icon-btn" onClick={handleRefresh}>
+                <RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />
+             </button>
+             <button className="share-btn">
+                <Share2 size={18} />
+                <span>Share Results</span>
+             </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
