@@ -1,28 +1,14 @@
-import { subDays } from 'date-fns';
-
 export const mockParticipants = [
-  { id: 1, name: "Naman Khairwar", scores: { day1: 10, day2: 0, day3: 0 }, bonus: 5, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 2, name: "Saheb Singh Sar", scores: { day1: 10, day2: 0, day3: 0 }, bonus: 3, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 3, name: "Kunal Shetty", scores: { day1: 8, day2: 0, day3: 0 }, bonus: 2, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 4, name: "Eshan Mohammad", scores: { day1: 10, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 5, name: "Devesh Sadashiv", scores: { day1: 10, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 6, name: "Deetya Shivathaya", scores: { day1: 9, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 7, name: "Lakshya Somani", scores: { day1: 8, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 8, name: "Riya Gupta", scores: { day1: 8, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 9, name: "Aaryan Patwardhan", scores: { day1: 7, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 10, name: "Aaryan Raorane", scores: { day1: 7, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 11, name: "rose", scores: { day1: 7, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
-  { id: 12, name: "Mansi Bansal", scores: { day1: 7, day2: 0, day3: 0 }, bonus: 0, streak: 1, lastSubmitted: subDays(new Date(), 0).toISOString() },
+  { id: 1, name: "CYBER_PHANTOM_99", streak: "12D", avg_speed: "124MS", total: 18442, rank: 1 },
+  { id: 2, name: "RECURSION_KING", streak: "8D", avg_speed: "142MS", total: 17902, rank: 2 },
+  { id: 3, name: "VOID_LOGGER", streak: "5D", avg_speed: "156MS", total: 16110, rank: 3 },
+  { id: 4, name: "BIT_CRUSHER_X", streak: "12D", avg_speed: "165MS", total: 15920, rank: 4 },
+  { id: 5, name: "SYNTAX_ERROR_9", streak: "2D", avg_speed: "192MS", total: 15844, rank: 5 },
+  { id: 6, name: "LOGIC_GIRL_PRO", streak: "8D", avg_speed: "178MS", total: 15100, rank: 6 },
+  { id: 7, name: "RECON_UNIT_01", streak: "15D", avg_speed: "110MS", total: 14890, rank: 7 },
+  { id: 8, name: "GHOST_SHELL", streak: "4D", avg_speed: "185MS", total: 14200, rank: 8 },
 ];
 
 export const processLeaderboardData = (data) => {
-  return data
-    .map(p => {
-      const total = Object.values(p.scores).reduce((a, b) => a + b, 0) + p.bonus + (p.streak >= 3 ? p.streak * 2 : 0);
-      return { ...p, total };
-    })
-    .sort((a, b) => {
-      if (b.total !== a.total) return b.total - a.total;
-      return new Date(a.lastSubmitted) - new Date(b.lastSubmitted);
-    });
+  return [...data].sort((a, b) => b.total - a.total);
 };
