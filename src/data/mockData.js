@@ -1,12 +1,12 @@
 export const mockParticipants = [
-  { id: 1, name: "CYBER_PHANTOM_99", streak: "12D", avg_speed: "124MS", total: 18442, rank: 1 },
-  { id: 2, name: "RECURSION_KING", streak: "8D", avg_speed: "142MS", total: 17902, rank: 2 },
-  { id: 3, name: "VOID_LOGGER", streak: "5D", avg_speed: "156MS", total: 16110, rank: 3 },
-  { id: 4, name: "BIT_CRUSHER_X", streak: "12D", avg_speed: "165MS", total: 15920, rank: 4 },
-  { id: 5, name: "SYNTAX_ERROR_9", streak: "2D", avg_speed: "192MS", total: 15844, rank: 5 },
-  { id: 6, name: "LOGIC_GIRL_PRO", streak: "8D", avg_speed: "178MS", total: 15100, rank: 6 },
-  { id: 7, name: "RECON_UNIT_01", streak: "15D", avg_speed: "110MS", total: 14890, rank: 7 },
-  { id: 8, name: "GHOST_SHELL", streak: "4D", avg_speed: "185MS", total: 14200, rank: 8 },
+  { id: 1, name: "Naman Khairwar", streak: 2, bonus: 10, day1: 15, day2: 14, day3: 8, day4: 7, day5: 0, day6: 9, day7: 0, tier: "S" },
+  { id: 2, name: "Kunal Shetty", streak: 2, bonus: 8, day1: 10, day2: 8, day3: 0, day4: 6, day5: 10, day6: 14, day7: 0, tier: "A" },
+  { id: 3, name: "Saheb Singh Sandhu", streak: 0, bonus: 10, day1: 13, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, tier: "A" },
+  { id: 4, name: "Eshan Mohammed", streak: 2, bonus: 10, day1: 10, day2: 10, day3: 0, day4: 7, day5: 14, day6: 0, day7: 0, tier: "A" },
+  { id: 5, name: "Aaryan Patwardhan", streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, tier: "B" },
+  { id: 6, name: "Deetya Shivathaya", streak: 2, bonus: 9, day1: 9, day2: 9, day3: 7, day4: 10, day5: 8, day6: 0, day7: 0, tier: "B" },
+  { id: 7, name: "Lakshya Somani", streak: 2, bonus: 8, day1: 8, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, tier: "B" },
+  { id: 8, name: "Aaryan Raorane", streak: 2, bonus: 7, day1: 7, day2: 7, day3: 10, day4: 14, day5: 12, day6: 8, day7: 0, tier: "C" },
 ];
 
 export const processLeaderboardData = (data) => {
