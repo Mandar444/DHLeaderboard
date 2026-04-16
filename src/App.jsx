@@ -12,47 +12,47 @@ import {
   ExternalLink
 } from 'lucide-react';
 
-const App = () => {
-  const [activeTab, setActiveTab] = useState('daily');
-  const [selectedDay, setSelectedDay] = useState(1);
-  const [expandedId, setExpandedId] = useState(null);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  // Real data from spreadsheet
-  const rawData = [
-    { id: 1, name: 'Naman Khairwar', streak: 2, bonus: 10, day1: 15, day2: 14, day3: 8, day4: 7, day5: 0, day6: 9, day7: 8, day8: 9, day9: 0, day10: 0, tier: 'S' },
+// Real data from spreadsheet
+const rawData = [
+    { id: 1, name: 'Naman Khairwar', streak: 2, bonus: 10, day1: 15, day2: 14, day3: 8, day4: 7, day5: 0, day6: 9, day7: 8, day8: 9, day9: 0, day10: 0, tier: 'A' },
     { id: 2, name: 'Kunal Shetty', streak: 2, bonus: 8, day1: 10, day2: 8, day3: 0, day4: 6, day5: 10, day6: 14, day7: 9, day8: 9, day9: 13, day10: 0, tier: 'A' },
-    { id: 3, name: 'Saheb Singh Sandhu', streak: 0, bonus: 10, day1: 13, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'A' },
+    { id: 3, name: 'Saheb Singh Sandhu', streak: 0, bonus: 10, day1: 13, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'C' },
     { id: 4, name: 'Eshan Mohammed', streak: 2, bonus: 10, day1: 10, day2: 10, day3: 0, day4: 7, day5: 14, day6: 0, day7: 14, day8: 13, day9: 0, day10: 0, tier: 'A' },
-    { id: 5, name: 'Aaryan Patwardhan', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'B' },
-    { id: 6, name: 'Deetya Shivathaya', streak: 2, bonus: 9, day1: 9, day2: 9, day3: 7, day4: 10, day5: 8, day6: 0, day7: 7, day8: 9, day9: 9, day10: 0, tier: 'B' },
-    { id: 7, name: 'Lakshya Somani', streak: 2, bonus: 8, day1: 8, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'B' },
-    { id: 8, name: 'Aaryan Raorane', streak: 2, bonus: 7, day1: 7, day2: 7, day3: 10, day4: 14, day5: 12, day6: 8, day7: 12, day8: 0, day9: 8, day10: 0, tier: 'C' },
-    { id: 9, name: 'rose', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'C' },
-    { id: 10, name: 'Devesh Sadashiv Hegde', streak: 2, bonus: 8, day1: 10, day2: 10, day3: 6, day4: 8, day5: 8, day6: 12, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'C' },
-    { id: 11, name: 'Mansi Bansal', streak: 2, bonus: 7, day1: 7, day2: 9, day3: 12, day4: 10, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
-    { id: 12, name: 'Riya Gupta', streak: 2, bonus: 8, day1: 8, day2: 8, day3: 6, day4: 8, day5: 8, day6: 8, day7: 9, day8: 14, day9: 10, day10: 0, tier: 'D' },
+    { id: 5, name: 'Aaryan Patwardhan', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
+    { id: 6, name: 'Deetya Shivathaya', streak: 2, bonus: 9, day1: 9, day2: 9, day3: 7, day4: 10, day5: 8, day6: 0, day7: 7, day8: 9, day9: 9, day10: 0, tier: 'A' },
+    { id: 7, name: 'Lakshya Somani', streak: 2, bonus: 8, day1: 8, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'C' },
+    { id: 8, name: 'Aaryan Raorane', streak: 2, bonus: 7, day1: 7, day2: 7, day3: 10, day4: 14, day5: 12, day6: 8, day7: 12, day8: 0, day9: 8, day10: 0, tier: 'A' },
+    { id: 9, name: 'rose', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
+    { id: 10, name: 'Devesh Sadashiv Hegde', streak: 2, bonus: 8, day1: 10, day2: 10, day3: 6, day4: 8, day5: 8, day6: 12, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'A' },
+    { id: 11, name: 'Mansi Bansal', streak: 2, bonus: 7, day1: 7, day2: 9, day3: 12, day4: 10, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'B' },
+    { id: 12, name: 'Riya Gupta', streak: 2, bonus: 8, day1: 8, day2: 8, day3: 6, day4: 8, day5: 8, day6: 8, day7: 9, day8: 14, day9: 10, day10: 0, tier: 'A' },
     { id: 13, name: 'Ananya Raut', streak: 1, bonus: 0, day1: 0, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
     { id: 14, name: 'Rehan Shashi', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
-    { id: 15, name: 'Prachi Matai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 10, day5: 8, day6: 0, day7: 8, day8: 0, day9: 0, day10: 0, tier: 'D' },
+    { id: 15, name: 'Prachi Matai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 10, day5: 8, day6: 0, day7: 8, day8: 0, day9: 0, day10: 0, tier: 'B' },
     { id: 16, name: 'Shreya Ravindra Desai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
     { id: 17, name: 'Vedant', streak: 1, bonus: 0, day1: 0, day2: 6, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
-    { id: 18, name: 'Guruprasad Tukaram Shinde', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 7, day4: 9, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
-    { id: 19, name: 'Nitin', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 12, day4: 7, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
+    { id: 18, name: 'Guruprasad Tukaram Shinde', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 7, day4: 9, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'B' },
+    { id: 19, name: 'Nitin', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 12, day4: 7, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'B' },
     { id: 20, name: 'Dhanvantri Panjwani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 2, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
     { id: 21, name: 'Ananya Bhavesh Raut', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 7, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
     { id: 22, name: 'Mariam Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 9, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
     { id: 23, name: 'Ayesha Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 8, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, tier: 'D' },
-    { id: 24, name: 'Devesh Hegde', streak: 2, bonus: 0, day1: 0, day2: 11, day3: 0, day4: 0, day5: 0, day6: 0, day7: 13, day8: 7, day9: 8, day10: 0, tier: 'D' },
-  ];
+    { id: 24, name: 'Devesh Hegde', streak: 2, bonus: 0, day1: 0, day2: 11, day3: 0, day4: 0, day5: 0, day6: 0, day7: 13, day8: 7, day9: 8, day10: 0, tier: 'B' },
+];
 
-  const calculateTier = (score) => {
+const calculateTier = (score) => {
     if (score >= 170) return 'S';
     if (score >= 40) return 'A';
     if (score >= 25) return 'B';
     if (score >= 10) return 'C';
     return 'D';
-  };
+};
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('daily');
+  const [selectedDay, setSelectedDay] = useState(1);
+  const [expandedId, setExpandedId] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const processedParticipants = useMemo(() => {
     return rawData.map(p => {
@@ -63,7 +63,7 @@ const App = () => {
         tier: calculateTier(total)
       };
     });
-  }, []);
+  }, []); // Static data doesn't need dependencies
 
   const getFilteredData = () => {
     let list = [...processedParticipants];
