@@ -47,7 +47,7 @@ const App = () => {
   ];
 
   const calculateTier = (score) => {
-    if (score >= 50) return 'S';
+    if (score >= 170) return 'S';
     if (score >= 40) return 'A';
     if (score >= 25) return 'B';
     if (score >= 10) return 'C';
