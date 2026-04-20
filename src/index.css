@@ -319,8 +319,8 @@ body {
 
 .breakdown-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .breakdown-item {
@@ -409,3 +409,24 @@ body {
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+
+.encouragement-banner {
+  margin-top: 15px;
+  background: rgba(0, 255, 153, 0.05);
+  border: 1px dashed var(--accent-neon);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.text-neon {
+  color: var(--accent-neon);
+  font-weight: 800;
+}
