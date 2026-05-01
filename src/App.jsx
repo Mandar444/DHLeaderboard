@@ -14,30 +14,30 @@ import {
 
 // Real data from spreadsheet
 const rawData = [
-    { id: 1, name: 'Naman Khairwar', streak: 2, bonus: 10, day1: 15, day2: 14, day3: 8, day4: 7, day5: 0, day6: 9, day7: 8, day8: 9, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'A' },
-    { id: 2, name: 'Kunal Shetty', streak: 12, bonus: 8, day1: 10, day2: 8, day3: 0, day4: 6, day5: 10, day6: 14, day7: 9, day8: 9, day9: 13, day10: 14, day11: 8, day12: 13, day13: 0, day14: 0, tier: 'A' },
-    { id: 3, name: 'Saheb Singh Sandhu', streak: 0, bonus: 10, day1: 13, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'C' },
-    { id: 4, name: 'Eshan Mohammed', streak: 8, bonus: 10, day1: 10, day2: 10, day3: 0, day4: 7, day5: 14, day6: 0, day7: 14, day8: 13, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'A' },
-    { id: 5, name: 'Aaryan Patwardhan', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 6, name: 'Deetya Shivathaya', streak: 9, bonus: 9, day1: 9, day2: 9, day3: 7, day4: 10, day5: 8, day6: 0, day7: 7, day8: 9, day9: 9, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'A' },
-    { id: 7, name: 'Lakshya Somani', streak: 2, bonus: 8, day1: 8, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'C' },
-    { id: 8, name: 'Aaryan Raorane', streak: 13, bonus: 7, day1: 7, day2: 7, day3: 10, day4: 14, day5: 12, day6: 8, day7: 12, day8: 0, day9: 8, day10: 9, day11: 8, day12: 9, day13: 11, day14: 0, tier: 'A' },
-    { id: 9, name: 'rose', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 10, name: 'Devesh Sadashiv Hegde', streak: 13, bonus: 8, day1: 10, day2: 10, day3: 6, day4: 8, day5: 8, day6: 12, day7: 13, day8: 7, day9: 8, day10: 7, day11: 11, day12: 7, day13: 8, day14: 0, tier: 'A' },
-    { id: 11, name: 'Mansi Bansal', streak: 2, bonus: 7, day1: 7, day2: 9, day3: 12, day4: 10, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'B' },
-    { id: 12, name: 'Riya Gupta', streak: 11, bonus: 8, day1: 8, day2: 8, day3: 6, day4: 8, day5: 8, day6: 8, day7: 9, day8: 14, day9: 10, day10: 0, day11: 12, day12: 0, day13: 6, day14: 0, tier: 'A' },
-    { id: 13, name: 'Ananya Raut', streak: 1, bonus: 0, day1: 0, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 14, name: 'Rehan Shashi', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 15, name: 'Prachi Matai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 10, day5: 8, day6: 0, day7: 8, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'B' },
-    { id: 16, name: 'Shreya Ravindra Desai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 17, name: 'Vedant', streak: 1, bonus: 0, day1: 0, day2: 6, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 18, name: 'Guruprasad Tukaram Shinde', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 7, day4: 9, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'B' },
-    { id: 19, name: 'Nitin', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 12, day4: 7, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 5, day14: 0, tier: 'B' },
-    { id: 20, name: 'Dhanvantri Panjwani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 2, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 21, name: 'Ananya Bhavesh Raut', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 7, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 22, name: 'Mariam Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 9, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 23, name: 'Ayesha Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 8, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, tier: 'D' },
-    { id: 25, name: 'TEJAS SHARAD KUTE', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 9, day13: 0, day14: 0, tier: 'D' },
+    { id: 1, name: 'Naman Khairwar', streak: 2, bonus: 10, day1: 15, day2: 14, day3: 8, day4: 7, day5: 0, day6: 9, day7: 8, day8: 9, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'A' },
+    { id: 2, name: 'Kunal Shetty', streak: 12, bonus: 8, day1: 10, day2: 8, day3: 0, day4: 6, day5: 10, day6: 14, day7: 9, day8: 9, day9: 13, day10: 14, day11: 8, day12: 13, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'A' },
+    { id: 3, name: 'Saheb Singh Sandhu', streak: 0, bonus: 10, day1: 13, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'C' },
+    { id: 4, name: 'Eshan Mohammed', streak: 8, bonus: 10, day1: 10, day2: 10, day3: 0, day4: 7, day5: 14, day6: 0, day7: 14, day8: 13, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'A' },
+    { id: 5, name: 'Aaryan Patwardhan', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 6, name: 'Deetya Shivathaya', streak: 9, bonus: 9, day1: 9, day2: 9, day3: 7, day4: 10, day5: 8, day6: 0, day7: 7, day8: 9, day9: 9, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'A' },
+    { id: 7, name: 'Lakshya Somani', streak: 2, bonus: 8, day1: 8, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'C' },
+    { id: 8, name: 'Aaryan Raorane', streak: 13, bonus: 7, day1: 7, day2: 7, day3: 10, day4: 14, day5: 12, day6: 8, day7: 12, day8: 0, day9: 8, day10: 9, day11: 8, day12: 9, day13: 11, day14: 0, day15: 12, day16: 8, day17: 8, day18: 9, day19: 8, day20: 8, day21: 9, day22: 8, day23: 7, day24: 0, tier: 'A' },
+    { id: 9, name: 'rose', streak: 0, bonus: 7, day1: 7, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 10, name: 'Devesh Sadashiv Hegde', streak: 13, bonus: 8, day1: 10, day2: 10, day3: 6, day4: 8, day5: 8, day6: 12, day7: 13, day8: 7, day9: 8, day10: 7, day11: 11, day12: 7, day13: 8, day14: 0, day15: 10, day16: 7, day17: 8, day18: 9, day19: 7, day20: 8, day21: 7, day22: 9, day23: 6, day24: 9, tier: 'A' },
+    { id: 11, name: 'Mansi Bansal', streak: 2, bonus: 7, day1: 7, day2: 9, day3: 12, day4: 10, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'B' },
+    { id: 12, name: 'Riya Gupta', streak: 11, bonus: 8, day1: 8, day2: 8, day3: 6, day4: 8, day5: 8, day6: 8, day7: 9, day8: 14, day9: 10, day10: 0, day11: 12, day12: 0, day13: 6, day14: 0, day15: 8, day16: 0, day17: 0, day18: 9, day19: 0, day20: 8, day21: 8, day22: 7, day23: 8, day24: 0, tier: 'A' },
+    { id: 13, name: 'Ananya Raut', streak: 1, bonus: 0, day1: 0, day2: 9, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 14, name: 'Rehan Shashi', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 15, name: 'Prachi Matai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 10, day5: 8, day6: 0, day7: 8, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'B' },
+    { id: 16, name: 'Shreya Ravindra Desai', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 17, name: 'Vedant', streak: 1, bonus: 0, day1: 0, day2: 6, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 18, name: 'Guruprasad Tukaram Shinde', streak: 1, bonus: 0, day1: 0, day2: 8, day3: 7, day4: 9, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'B' },
+    { id: 19, name: 'Nitin', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 12, day4: 7, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 5, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'B' },
+    { id: 20, name: 'Dhanvantri Panjwani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 2, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 21, name: 'Ananya Bhavesh Raut', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 7, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 22, name: 'Mariam Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 9, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 23, name: 'Ayesha Toofani', streak: 0, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 8, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 0, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
+    { id: 25, name: 'TEJAS SHARAD KUTE', streak: 1, bonus: 0, day1: 0, day2: 0, day3: 0, day4: 0, day5: 0, day6: 0, day7: 0, day8: 0, day9: 0, day10: 0, day11: 0, day12: 9, day13: 0, day14: 0, day15: 0, day16: 0, day17: 0, day18: 0, day19: 0, day20: 0, day21: 0, day22: 0, day23: 0, day24: 0, tier: 'D' },
 ];
 
 const calculateTier = (score) => {
@@ -56,7 +56,7 @@ const App = () => {
 
   const processedParticipants = useMemo(() => {
     return rawData.map(p => {
-      const total = p.day1 + p.day2 + p.day3 + p.day4 + p.day5 + p.day6 + p.day7 + p.day8 + p.day9 + p.day10 + p.day11 + p.day12 + p.day13 + p.day14;
+      const total = p.day1 + p.day2 + p.day3 + p.day4 + p.day5 + p.day6 + p.day7 + p.day8 + p.day9 + p.day10 + p.day11 + p.day12 + p.day13 + p.day14 + p.day15 + p.day16 + p.day17 + p.day18 + p.day19 + p.day20 + p.day21 + p.day22 + p.day23 + p.day24;
       return {
         ...p,
         total,
@@ -96,6 +96,16 @@ const App = () => {
       case 12: return player.day12;
       case 13: return player.day13;
       case 14: return player.day14;
+      case 15: return player.day15;
+      case 16: return player.day16;
+      case 17: return player.day17;
+      case 18: return player.day18;
+      case 19: return player.day19;
+      case 20: return player.day20;
+      case 21: return player.day21;
+      case 22: return player.day22;
+      case 23: return player.day23;
+      case 24: return player.day24;
       default: return 0;
     }
   };
@@ -162,7 +172,7 @@ const App = () => {
           <div className="sub-filter-container animate-fade-in">
              <span className="sub-filter-label">Filter:</span>
              <div className="day-dots">
-               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(day => (
+               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(day => (
                  <button 
                    key={day}
                    className={`day-dot ${selectedDay === day ? 'active' : ''}`}
@@ -277,6 +287,46 @@ const App = () => {
                       <div className="breakdown-item">
                         <span className="breakdown-label">D14</span>
                         <span className="breakdown-value">{player.day14}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D15</span>
+                        <span className="breakdown-value">{player.day15}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D16</span>
+                        <span className="breakdown-value">{player.day16}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D17</span>
+                        <span className="breakdown-value">{player.day17}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D18</span>
+                        <span className="breakdown-value">{player.day18}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D19</span>
+                        <span className="breakdown-value">{player.day19}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D20</span>
+                        <span className="breakdown-value">{player.day20}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D21</span>
+                        <span className="breakdown-value">{player.day21}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D22</span>
+                        <span className="breakdown-value">{player.day22}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D23</span>
+                        <span className="breakdown-value">{player.day23}</span>
+                      </div>
+                      <div className="breakdown-item">
+                        <span className="breakdown-label">D24</span>
+                        <span className="breakdown-value">{player.day24}</span>
                       </div>
                       <div className="breakdown-item" style={{ gridColumn: 'span 3', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '8px', marginTop: '4px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
